@@ -1,0 +1,31 @@
+Easy 1. Storing the encoded flag inside of the file metadata
+
+Easy / Medium. Appending a rar file to the end of a .jpg
+  The rar file can be read if the jpg is opened with winrar / windows explorer etc...
+  
+  Make it a medium flag by encrypting the rar with a shitty password from rockyou.txt
+    Force them to use fcrackzip or john to crack, unsure of the feasibility of this one
+    
+Hard? Spiral of pretty colors
+      spiral where the RGB codes decode to an encoded flag, encoded as follows:
+          RC3{flag-goes-here}
+          base64 Encode
+          ASCII to Binary
+          base64 Encode
+          RGB spiral encoding
+          
+      This brings the flag out to a few thousand characters, forces scripting. 
+      (could also use morse code to avoid double base64)
+     
+     
+Definitely Hard. Piet Code that prints a script.
+      Pretty obscure knowledge, would be time consuming to find?
+     
+
+Hard Bonus Flag:
+      We give them an encrypted data set, with a vague hint leading to Shamir's Secret Sharing Algorithm 
+      
+      Basically we can encrypt the data set with the flags, and set the encryption to only require x/? keys,
+      to reward them for figuring out and implementing shamirs algo, but requiring the solving of previous challenges
+      
+Bonus Flag similar to above, but requiring all of the flags, including the previous one.       
