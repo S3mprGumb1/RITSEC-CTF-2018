@@ -5,6 +5,9 @@ Easy / Medium. Appending a rar file to the end of a .jpg
   
   Make it a medium flag by encrypting the rar with a shitty password from rockyou.txt
     Force them to use fcrackzip or john to crack, unsure of the feasibility of this one
+	
+Medium 2:
+	https://github.com/teamavidya/ctf/tree/master/2015_seccon_quals/steganography2%5Bstego100%5D
     
 Hard? Spiral of pretty colors
       spiral where the RGB codes decode to an encoded flag, encoded as follows:
