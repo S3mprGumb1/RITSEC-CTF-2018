@@ -13,17 +13,18 @@ Hard? Spiral of pretty colors
       spiral where the RGB codes decode to an encoded flag, encoded as follows:
           RC3{flag-goes-here}
           base64 Encode
-          ASCII to Binary
+          ASCII to Morse
           base64 Encode
           RGB spiral encoding
           
       This brings the flag out to a few thousand characters, forces scripting. 
-      (could also use morse code to avoid double base64)
-     
+	  
+Hard 2:
+		Little endian encoded string in a jpg.
+		Encode data in the image from the rear of the image.
      
 Definitely Hard. Piet Code that prints a script.
       Pretty obscure knowledge, would be time consuming to find?
-     
 
 Hard Bonus Flag:
       We give them an encrypted data set, with a vague hint leading to Shamir's Secret Sharing Algorithm 
@@ -31,4 +32,10 @@ Hard Bonus Flag:
       Basically we can encrypt the data set with the flags, and set the encryption to only require x/? keys,
       to reward them for figuring out and implementing shamirs algo, but requiring the solving of previous challenges
       
-Bonus Flag similar to above, but requiring all of the flags, including the previous one.       
+Bonus Flag similar to above, but requiring all of the flags, including the previous one.   
+
+Coding Challenge:
+		Create a program in c to create an array of arrays,
+		such that the lengths of the nested array is the result of the fibonacci and the index
+		these arrays are then populated with the the result of the fibonacci sequence and the overall index, 
+			(such that all numbers in the sequence are represented only once in the entire overall array)
