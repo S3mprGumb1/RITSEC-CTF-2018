@@ -1,19 +1,15 @@
 from PIL import Image
 
-
-
-
-
-
+# similar to opening a file, but for PIL
 def openImage(filename):
     return Image.open(filename)
 
 def saveImage(image, path):
     image.save(path, 'png')
 
+# Creates image object
 def createImage(width, height):
     return Image.new("RGB", (width, height), "white")
-
 
 
 # Returns a pixel array, which is
@@ -22,6 +18,7 @@ def createImage(width, height):
 # [2] - B
 def getPixel(image, x, y):
 
+    # Get the width and height of the image (dimesions)
     w, h = image.size
     
     # Check boundaries 
@@ -31,6 +28,9 @@ def getPixel(image, x, y):
     return image.getpixel(x,y)
 
 
+# This function does some black magic fuckery to convert
+# the flag (a string) into binary 
+# Written by (1cysw0rdk0)
 def convertToBitString(flagString):
     result = []
     for char in flagString:
@@ -74,7 +74,7 @@ def encodeBitString(bitstring, image):
             bit = bitstring[count]
 
             if bit == "0":
-                if blue % 2 != 0:
+               if blue % 2 != 0:
                     blue -= 1
             else:
                 if blue % 2 == 0:
@@ -87,13 +87,20 @@ def encodeBitString(bitstring, image):
     return new
 
 
+# Takes the string (flag) and converts to binary
+# Each letter is converted to binary and saved in the "binaryLetters"
+# list. This will allow easy encoding later. 
+binaryLetters = []
+for c in 'Test String':
+    bitstring = convertToBitString(c)
+    binaryLetters.append(bitstring)
+    bitstring = 0
 
-bitstring = convertToBitString('Test String')
-print('Encoding bitstring ' + bitstring)
+# # Opens the image
+# image = openImage('stegorex.jpg')
+# print('Image Loaded')
 
-image = openImage('stegorex.jpg')
-print('Image Loaded')
-
-newImage = encodeBitString(bitstring,image)
-saveImage(newImage, 'stegorex.jpg')
+# # Encodes the bitstring (flag) into the image
+# newImage = encodeBitString(bitstring,image)
+# saveImage(newImage, 'the-mighty-stegosaurus.png')
 
