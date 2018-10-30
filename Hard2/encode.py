@@ -47,4 +47,5 @@ def changeImage():
     # Writes new image to disk
     newImage.save('test.jpg')
 
-changeImage()
+if '__name__' == '__main__':
+    changeImage()
