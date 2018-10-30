@@ -1,106 +1,50 @@
+# Authors:  Shadow5229  1cysw0rdk0
+# File: encode.py
+# 
+# This file takes a string and will encode it into an RGB formatted image.
+# It does this by taking the ORD value of each character and setting them
+# as one of the RGB values (code replaces BLUE value) with the new value.
+#
+# Created for RITSEC CTF2018
+
 from PIL import Image
 
-# similar to opening a file, but for PIL
-def openImage(filename):
-    return Image.open(filename)
-
-def saveImage(image, path):
-    image.save(path, 'png')
-
-# Creates image object
-def createImage(width, height):
-    return Image.new("RGB", (width, height), "white")
 
 
-# Returns a pixel array, which is
-# [0] - R
-# [1] - G
-# [2] - B
-def getPixel(image, x, y):
-
-    # Get the width and height of the image (dimesions)
-    w, h = image.size
+def changeImage():
+    # open the image you want to encode data to
+    image = Image.open('spielberg_dino_c.jpg')
     
-    # Check boundaries 
-    if x > w or y > h or x < 0 or y < 0:
-        return None
-    
-    return image.getpixel(x,y)
+    # This the string that will be encoded into the image
+    flag = 'This_wilL_be_the_flag'
 
+    # a list to hold the tuples of pixels for the new image
+    newImageData = []
 
-# This function does some black magic fuckery to convert
-# the flag (a string) into binary 
-# Written by (1cysw0rdk0)
-def convertToBitString(flagString):
-    result = []
-    for char in flagString:
-        bits = bin(ord(char))[2:]
-        bits = '00000000'[len(bits):] + bits
-        result.extend([int(b) for b in bits])
-    
-    outstring = ""    
-    for b in result:
-        outstring += str(b)
-
-    return outstring
-
-
-
-def encodeBitString(bitstring, image):
-
-    w, h = image.size
-    new = createImage(w, h)
-    newPixels = new.load()
-
-
-    # Sanity Checks
-    if len(bitstring) > (w*h):
-        print('String too long!')
-        return None
-
-    if len(bitstring) == 0:
-        print('String is empty!')
-        return None
-    
+    # count for looping around 
     count = 0
-    for y in range(h,0):
-        for x in range(w,0):
-            
-            # Get Green Code
-            pixel = getPixel(x,y)
-            blue = pixel[2]
 
-            # Get encode bit
-            bit = bitstring[count]
+    # COLOR is a tuple of RGB value data for each pixel
+    for color in image.getdata():
 
-            if bit == "0":
-               if blue % 2 != 0:
-                    blue -= 1
-            else:
-                if blue % 2 == 0:
-                    blue += 1
+        # creates a new RGB tuple with the ord value of the char from the flag string
+        newPixel = (color[0], color[1], ord(flag[count]))
+        
+        # Appends the tuple to the list
+        newImageData.append(newPixel)
 
+        # used for wrapping back around the flag
+        count += 1
+        if count == len(flag):
+            count = 0
 
-            pixels[x,y] = (int(pixel[0]), int(pixel[1]), int(blue))
-            count += 1
+    # creates a new IMAGE object with the same mode and size as the original
+    newImage = Image.new(image.mode, image.size)
     
-    return new
+    # Copies pixel data to the image
+    newImage.putdata(newImageData)
 
+    # Writes new image to disk
+    newImage.save('test.jpg')
 
-# Takes the string (flag) and converts to binary
-# Each letter is converted to binary and saved in the "binaryLetters"
-# list. This will allow easy encoding later. 
-binaryLetters = []
-for c in 'Test String':
-    bitstring = convertToBitString(c)
-    binaryLetters.append(bitstring)
-    bitstring = 0
-
-# # Opens the image
-# image = openImage('stegorex.jpg')
-# print('Image Loaded')
-
-# # Encodes the bitstring (flag) into the image
-# newImage = encodeBitString(bitstring,image)
-# saveImage(newImage, 'the-mighty-stegosaurus.png')
-
+changeImage()
