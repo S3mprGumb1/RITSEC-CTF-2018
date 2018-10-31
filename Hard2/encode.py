@@ -16,7 +16,7 @@ def changeImage():
     image = Image.open('spielberg_dino_c.jpg')
     
     # This the string that will be encoded into the image
-    flag = 'This_wilL_be_the_flag'
+    flag = 'RITSEC{TIL_JPEG_COMPRESSION_MESSES_WITH_RGB_VALUES}'
 
     # a list to hold the tuples of pixels for the new image
     newImageData = []
@@ -26,9 +26,10 @@ def changeImage():
 
     # COLOR is a tuple of RGB value data for each pixel
     for color in image.getdata():
-
+        
+        blue = (ord(flag[count]) + 13) % 256
         # creates a new RGB tuple with the ord value of the char from the flag string
-        newPixel = (color[0], color[1], ord(flag[count]))
+        newPixel = (color[0], color[1], blue)
         
         # Appends the tuple to the list
         newImageData.append(newPixel)
@@ -39,13 +40,13 @@ def changeImage():
             count = 0
 
     # creates a new IMAGE object with the same mode and size as the original
-    newImage = Image.new(image.mode, image.size)
+    newImage = Image.new('RGB', image.size)
     
     # Copies pixel data to the image
     newImage.putdata(newImageData)
 
     # Writes new image to disk
-    newImage.save('test.jpg')
+    newImage.save('test.png','PNG')
 
 if __name__ == '__main__':
     changeImage()
