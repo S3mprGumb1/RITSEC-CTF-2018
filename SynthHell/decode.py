@@ -6,7 +6,7 @@ def decodeImage():
     flag2 = ""
     flag3 = ""
 
-    image = Image.open('test.png')
+    image = Image.open('music.png')
     for color in image.getdata():
         flag3 += chr(color[2])
         flag2 += chr(color[0])
